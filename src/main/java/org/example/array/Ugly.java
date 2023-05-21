@@ -34,7 +34,7 @@ public class Ugly {
      * @return
      */
     public int nthUglyNumber(int n) {
-        
+        return 0;
     }
 
 

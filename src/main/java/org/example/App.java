@@ -1,7 +1,7 @@
 package org.example;
 
 import org.example.listNode.ListNode;
-import org.example.num86.Solution;
+import org.example.listNode.Solution;
 
 /**
  * Hello world!
