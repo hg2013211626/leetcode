@@ -2,6 +2,7 @@ package org.example.dp;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author kenfeng
@@ -9,6 +10,76 @@ import java.util.Comparator;
  * @description TODO
  */
 public class Solution {
+
+
+    public int matrixSum(int[][] nums) {
+        int sum = 0;
+        int wid = nums.length;
+        int hig = nums[0].length;
+        int tag[][] = new int[wid][hig];
+        for (int i = 0; i < wid; i++) {
+            int n[] = nums[i];
+            Arrays.sort(n);
+            tag[i] = n;
+        }
+
+        for (int i = 0;i<hig;i++) {
+            int max = Integer.MIN_VALUE;
+            for(int j=0;j<wid;j++) {
+                if(tag[j][i] > max) {
+                    max = tag[j][i];
+                }
+            }
+            sum += max;
+        }
+        return sum;
+    }
+
+
+    public int maxResult(int[] nums, int k) {
+        int dp[] = new int[nums.length];
+        dp[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = Integer.MIN_VALUE;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            int end = Math.min(i + k, nums.length - 1);
+            for (int j = i + 1; j <= end; j++) {
+                dp[j] = Math.max(dp[j], dp[i] + nums[j]);
+                // 如果dp[j]>dp[i]，那么后面都可以从dp[j]来跳
+                if (dp[j] >= dp[i]) {
+                    break;
+                }
+            }
+        }
+        return dp[nums.length - 1];
+    }
+
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        boolean num[] = new boolean[s.length() + 1];
+        num[0] = true;
+        for (int i = 1; i < s.length() + 1; i++) {
+            boolean flag = false;
+            for (String word : wordDict) {
+                int wordLength = word.length();
+                if (i < wordLength) {
+                    continue;
+                }
+                String subStr = s.substring(i - wordLength, i);
+                if (subStr.equals(word)) {
+                    flag = num[i - wordLength];
+                }
+                if (flag) {
+                    break;
+                }
+            }
+            num[i] = flag;
+        }
+        return num[s.length()];
+    }
+
 
     /**
      * https://leetcode.cn/problems/climbing-stairs/
@@ -55,7 +126,7 @@ public class Solution {
         dp[0] = 1;
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j < i; j++) {
-                if (nums[j] <= nums[i]) {
+                if (nums[j] < nums[i]) {
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
@@ -86,8 +157,8 @@ public class Solution {
                     right = mid;
                 }
             }
-            if(left == plice) {
-                plice ++;
+            if (left == plice) {
+                plice++;
             }
             top[left] = poker;
         }
@@ -101,7 +172,7 @@ public class Solution {
                 return o1[0] == o2[0] ? o2[1] - o1[1] : o2[0] - o1[0];
             }
         });
-
+        return 0;
     }
 
 
